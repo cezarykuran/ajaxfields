@@ -1,0 +1,21 @@
+.ajaxfields-input {margin-bottom: 5px}
+.ajaxfields-list.form-control {
+  height: 10em;
+  overflow: auto;
+}
+.ajaxfields-list-item {
+  padding: 0 5px;
+  border-radius: 3px;
+}
+.ajaxfields-list-item:hover {
+  background-color: rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+.ajaxfields-list-item-id {
+  display: inline-block;
+  margin-left: 0.5em;
+  width: 4em;
+}
+.ajaxfields-list-item .glyphicon-check {display: none}
+.ajaxfields-list-item-checked .glyphicon-check {display: inline-block}
+.ajaxfields-list-item-checked .glyphicon-unchecked {display: none}
