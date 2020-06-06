@@ -2,7 +2,7 @@ dependency <- function() {
   htmltools::htmlDependency(
     "ajaxfields",
     packageVersion('ajaxfields'),
-    src = "www",
+    src = c(file = "www"),
     package = "ajaxfields",
     script = "ajaxfields.js",
     stylesheet = "ajaxfields.css",
@@ -12,16 +12,16 @@ dependency <- function() {
 
 #' draw search input and options list
 #'
+#' ui <- fluidPage(
+#'   ..
+#'   ajaxfields::draw("some-namespace","http://ncbi.post.host/url/")
+#'   ..
+#' )
+#'
 #' @param id namespace
 #' @param host post db host
-#' @param label
+#' @param label html component label
 #' @export
-#' @examples
-#'  ui <- fluidPage(
-#'    ..
-#'    ajaxfields::draw("some-namespace","http://ncbi.post.host/url/")
-#'    ..
-#'  )
 draw <- function(id, host, label) {
   ns <- shiny::NS(id)
 
@@ -38,15 +38,17 @@ draw <- function(id, host, label) {
 
 #' shiny server (module) function
 #'
-#' @return reactive data
-#' @export
+#' server <- function(input, output, session) {
+#'   ..
+#'   data <- callModule(ajaxfields::observer, "some-namespace")
+#'   ..
+#' }
 #'
-#' @examples
-#'  server <- function(input, output, session) {
-#'    ..
-#'    data <- callModule(ajaxfields::observer, "some-namespace")
-#'    ..
-#'  }
+#' @param input unused
+#' @param output unused
+#' @param session unused
+#' @return reactive list
+#' @export
 observer <- function(input, output, session) {
-    reactive(input$ajaxfields)
+    shiny::reactive(input$ajaxfields)
 }

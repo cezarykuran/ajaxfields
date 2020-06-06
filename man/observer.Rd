@@ -6,16 +6,20 @@
 \usage{
 observer(input, output, session)
 }
+\arguments{
+\item{input}{unused}
+
+\item{output}{unused}
+
+\item{session}{unused}
+}
 \value{
-reactive data
+reactive list
 }
 \description{
-shiny server (module) function
+server <- function(input, output, session) {
+  ..
+  data <- callModule(ajaxfields::observer, "some-namespace")
+  ..
 }
-\examples{
- server <- function(input, output, session) {
-   ..
-   data <- callModule(ajaxfields::observer, "some-namespace")
-   ..
- }
 }
