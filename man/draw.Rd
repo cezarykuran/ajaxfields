@@ -4,19 +4,17 @@
 \alias{draw}
 \title{draw search input and options list}
 \usage{
-draw(id, host, label)
+draw(id, label)
 }
 \arguments{
 \item{id}{namespace}
-
-\item{host}{post db host}
 
 \item{label}{html component label}
 }
 \description{
 ui <- fluidPage(
   ..
-  ajaxfields::draw("some-namespace","http://ncbi.post.host/url/")
+  ajaxfields::draw("some-namespace", "label")
   ..
 )
 }

@@ -14,24 +14,20 @@ dependency <- function() {
 #'
 #' ui <- fluidPage(
 #'   ..
-#'   ajaxfields::draw("some-namespace","http://ncbi.post.host/url/")
+#'   ajaxfields::draw("some-namespace", "label")
 #'   ..
 #' )
 #'
 #' @param id namespace
-#' @param host post db host
 #' @param label html component label
 #' @export
-draw <- function(id, host, label) {
+draw <- function(id, label) {
   ns <- shiny::NS(id)
 
   shiny::div(id = ns('ajaxfields'), class = "form-group ajaxfields-container",
     shiny::tags$label(label),
     shiny::tags$input(type="text", class="form-control ajaxfields-input", onkeyup=paste0("ajaxfields.onkeyup(this, '", ns('ajaxfields'), "')")),
     shiny::div(class="form-control ajaxfields-list"),
-    shiny::tags$script(shiny::HTML(
-      paste0("ajaxfields.load('", ns('ajaxfields'), "', '", host, "')")
-    )),
     dependency()
   )
 }
@@ -50,5 +46,26 @@ draw <- function(id, host, label) {
 #' @return reactive list
 #' @export
 observer <- function(input, output, session) {
-    shiny::reactive(input$ajaxfields)
+  shiny::reactive(input$ajaxfields)
+}
+
+#' shiny server load modules engine
+#'
+#' server <- function(input, output, session) {
+#'   ..
+#'   ajaxfields::loadEngine(session, "some-namespace", "simle", ""http://ncbi.post.host/url/")
+#'   ajaxfields::loadEngine(session, "some-other-namespace", "es", "http://elastic.seach:9200/indexName/")
+#'   ..
+#' }
+#'
+#' @param session shiny server session
+#' @param id namespace
+#' @param engine engine type (simple/es)
+#' @param url engine url
+#' @export
+loadEngine <- function(session, id, engine, url) {
+  ns <- shiny::NS(id)
+  session$sendCustomMessage("ajaxfields", list(
+    ns = ns('ajaxfields'), engine = engine, url = url
+  ))
 }

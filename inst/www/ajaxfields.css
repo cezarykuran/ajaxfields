@@ -3,6 +3,10 @@
   height: 10em;
   overflow: auto;
 }
+.ajaxfields-list-bussy.form-control {
+  color: #777
+}
+
 .ajaxfields-list-item {
   padding: 0 5px;
   border-radius: 3px;
