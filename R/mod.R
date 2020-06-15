@@ -20,14 +20,16 @@ dependency <- function() {
 #'
 #' @param id namespace
 #' @param label html component label
+#' @param class css class (optional)
 #' @export
-draw <- function(id, label) {
+draw <- function(id, label, class = '') {
   ns <- shiny::NS(id)
 
-  shiny::div(id = ns('ajaxfields'), class = "form-group ajaxfields-container",
+  shiny::div(id = ns('ajaxfields'), class = paste0("form-group ajaxfields-container ", class),
     shiny::tags$label(label),
-    shiny::tags$input(type="text", class="form-control ajaxfields-input", onkeyup=paste0("ajaxfields.onkeyup(this, '", ns('ajaxfields'), "')")),
+    shiny::tags$input(type="text", class="form-control ajaxfields-input", onkeyup=paste0("ajaxfields.input.onkeyup(this, '", ns('ajaxfields'), "')")),
     shiny::div(class="form-control ajaxfields-list"),
+    shiny::div(class="ajaxfields-state"),
     dependency()
   )
 }
@@ -62,8 +64,9 @@ observer <- function(input, output, session) {
 #' @param id namespace
 #' @param engine engine type (simple/es)
 #' @param url engine url
+#' @param limit results max size (optional, default 1000)
 #' @export
-loadEngine <- function(session, id, engine, url) {
+loadEngine <- function(session, id, engine, url, limit = 1000) {
   ns <- shiny::NS(id)
   session$sendCustomMessage("ajaxfields", list(
     ns = ns('ajaxfields'), engine = engine, url = url

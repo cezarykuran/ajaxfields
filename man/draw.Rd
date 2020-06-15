@@ -4,12 +4,14 @@
 \alias{draw}
 \title{draw search input and options list}
 \usage{
-draw(id, label)
+draw(id, label, class = "")
 }
 \arguments{
 \item{id}{namespace}
 
 \item{label}{html component label}
+
+\item{class}{css class (optional)}
 }
 \description{
 ui <- fluidPage(

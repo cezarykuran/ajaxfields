@@ -4,7 +4,7 @@
   overflow: auto;
 }
 .ajaxfields-list-bussy.form-control {
-  color: #777
+  color: #AAA
 }
 
 .ajaxfields-list-item {
@@ -23,3 +23,8 @@
 .ajaxfields-list-item .glyphicon-check {display: none}
 .ajaxfields-list-item-checked .glyphicon-check {display: inline-block}
 .ajaxfields-list-item-checked .glyphicon-unchecked {display: none}
+.ajaxfields-state {
+  height: 20px;
+  line-height: 20px;
+  font-size: 12px;
+}
