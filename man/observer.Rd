@@ -14,7 +14,7 @@ observer(input, output, session)
 \item{session}{unused}
 }
 \value{
-reactive list
+reactive matrix
 }
 \description{
 server <- function(input, output, session) {

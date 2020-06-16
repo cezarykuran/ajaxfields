@@ -8,17 +8,26 @@
 }
 
 .ajaxfields-list-item {
-  padding: 0 5px;
+  clear: both;
+  padding: 3px 5px;
   border-radius: 3px;
+  line-height: 1.1em;
 }
 .ajaxfields-list-item:hover {
   background-color: rgba(0,0,0,0.1);
   cursor: pointer;
 }
+.ajaxfields-list-item-ico {
+  float: left;
+  margin-top: -1px;
+  width: 1.5em;
+}
 .ajaxfields-list-item-id {
-  display: inline-block;
-  margin-left: 0.5em;
+  float: left;
   width: 4em;
+}
+.ajaxfields-list-item-name {
+  overflow: hidden;
 }
 .ajaxfields-list-item .glyphicon-check {display: none}
 .ajaxfields-list-item-checked .glyphicon-check {display: inline-block}

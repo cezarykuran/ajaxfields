@@ -27,7 +27,7 @@ draw <- function(id, label, class = '') {
 
   shiny::div(id = ns('ajaxfields'), class = paste0("form-group ajaxfields-container ", class),
     shiny::tags$label(label),
-    shiny::tags$input(type="text", class="form-control ajaxfields-input", onkeyup=paste0("ajaxfields.input.onkeyup(this, '", ns('ajaxfields'), "')")),
+    shiny::tags$input(type="text", placeholder="search..", class="form-control ajaxfields-input", onkeyup=paste0("ajaxfields.input.onkeyup(this, '", ns('ajaxfields'), "')")),
     shiny::div(class="form-control ajaxfields-list"),
     shiny::div(class="ajaxfields-state"),
     dependency()
@@ -45,10 +45,17 @@ draw <- function(id, label, class = '') {
 #' @param input unused
 #' @param output unused
 #' @param session unused
-#' @return reactive list
+#' @return reactive matrix
 #' @export
 observer <- function(input, output, session) {
-  shiny::reactive(input$ajaxfields)
+  shiny::reactive({
+    if(is.null(input$ajaxfields))
+      return(NULL)
+
+    tmp <- matrix(input$ajaxfields, ncol = 2)
+    colnames(tmp) <- c('id', 'name')
+    return(tmp)
+  })
 }
 
 #' shiny server load modules engine
@@ -69,6 +76,6 @@ observer <- function(input, output, session) {
 loadEngine <- function(session, id, engine, url, limit = 1000) {
   ns <- shiny::NS(id)
   session$sendCustomMessage("ajaxfields", list(
-    ns = ns('ajaxfields'), engine = engine, url = url
+    ns = ns('ajaxfields'), engine = engine, url = url, limit = limit
   ))
 }

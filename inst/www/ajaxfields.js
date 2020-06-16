@@ -32,15 +32,15 @@ ajaxfields = {
       $container.children('.ajaxfields-list').addClass('ajaxfields-list-bussy')
       $container.children('.ajaxfields-state').text('loading..')
 
-      var provider = ajaxfields.mods[ns].provider;
+      var engine = ajaxfields.mods[ns].engine;
       var limit = typeof ajaxfields.mods[ns].limit === undefined
         ? 1000
         : ajaxfields.mods[ns].limit
 
       $.ajax({
           'url'       : ajaxfields.mods[ns].url,
-          'method'    : ajaxfields.ajax.providers[provider].method,
-          'data'      : ajaxfields.ajax.providers[provider].preData(s, limit),
+          'method'    : ajaxfields.ajax.engines[engine].method,
+          'data'      : ajaxfields.ajax.engines[engine].preData(s, limit),
           'dataType'  : 'json',
           //'cache'     : false,
           'success'   : function(d){ajaxfields.ajax.response('success', ns, d)},
@@ -56,7 +56,7 @@ ajaxfields = {
       $list.removeClass('ajaxfields-list-bussy')
 
       if(type == 'success') {
-        d = ajaxfields.ajax.providers[ajaxfields.mods[ns].provider].postData(d)
+        d = ajaxfields.ajax.engines[ajaxfields.mods[ns].engine].postData(d)
 
         if(!d.error) {
           $list.html('')
@@ -77,7 +77,7 @@ ajaxfields = {
       $state.text('')
     },
 
-    providers : {
+    engines : {
       simple : {
         method : 'POST',
 
@@ -137,14 +137,18 @@ ajaxfields = {
         .attr('data-id', id)
         .attr('data-name', name)
         .append([
-          $(document.createElement('I'))
-            .addClass('glyphicon glyphicon-unchecked'),
-          $(document.createElement('I'))
-            .addClass('glyphicon glyphicon-check'),
-          $(document.createElement('SPAN'))
+          $(document.createElement('DIV'))
+            .addClass('ajaxfields-list-item-ico')
+            .append([
+              $(document.createElement('I'))
+                .addClass('glyphicon glyphicon-unchecked'),
+              $(document.createElement('I'))
+                .addClass('glyphicon glyphicon-check')
+            ]),
+          $(document.createElement('DIV'))
             .addClass('ajaxfields-list-item-id')
             .text(id),
-          $(document.createElement('SPAN'))
+          $(document.createElement('DIV'))
             .addClass('ajaxfields-list-item-name')
             .text(name)
         ])
@@ -161,12 +165,16 @@ ajaxfields = {
       $o.addClass('ajaxfields-list-item-checked')
     }
 
-    var data = {}
+    var i = []
+    var n = []
     $.each($o.parent().children(), function(){
       var $i = $(this)
-      if($i.hasClass('ajaxfields-list-item-checked')) data[parseInt($i.attr('data-id'))] = $i.attr('data-name')
+      if($i.hasClass('ajaxfields-list-item-checked')) {
+        i.push($i.attr('data-id'))
+        n.push($i.attr('data-name'))
+      }
     })
-    Shiny.setInputValue($o.closest('.ajaxfields-container').attr('id'), data);
+    Shiny.setInputValue($o.closest('.ajaxfields-container').attr('id'), [i,n]);
   }
 }
 
@@ -175,7 +183,7 @@ Shiny.addCustomMessageHandler('ajaxfields', function(conf) {
     'i' : -1,
     'icnt' : 1,
     'cache' : '',
-    'provider' : conf.engine,
+    'engine' : conf.engine,
     'url' : conf.url,
     'limit' : conf.limit
   }
