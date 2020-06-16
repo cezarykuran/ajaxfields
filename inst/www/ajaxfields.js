@@ -37,15 +37,20 @@ ajaxfields = {
         ? 1000
         : ajaxfields.mods[ns].limit
 
-      $.ajax({
+      var data = {
           'url'       : ajaxfields.mods[ns].url,
           'method'    : ajaxfields.ajax.engines[engine].method,
           'data'      : ajaxfields.ajax.engines[engine].preData(s, limit),
           'dataType'  : 'json',
-          //'cache'     : false,
           'success'   : function(d){ajaxfields.ajax.response('success', ns, d)},
           'error'     : function(d){ajaxfields.ajax.response('error', ns, d)}
-      })
+      }
+
+      if(typeof ajaxfields.mods[ns].authbasic === 'string') {
+        data.headers = {"Authorization" : "Basic " + btoa(ajaxfields.mods[ns].authbasic)}
+      }
+
+      $.ajax(data)
     },
 
     response : function(type, ns, d) {
@@ -185,6 +190,7 @@ Shiny.addCustomMessageHandler('ajaxfields', function(conf) {
     'cache' : '',
     'engine' : conf.engine,
     'url' : conf.url,
-    'limit' : conf.limit
+    'limit' : conf.limit,
+    'authbasic' : conf.authbasic,
   }
 });

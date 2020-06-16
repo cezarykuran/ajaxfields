@@ -72,10 +72,11 @@ observer <- function(input, output, session) {
 #' @param engine engine type (simple/es)
 #' @param url engine url
 #' @param limit results max size (optional, default 1000)
+#' @param authbasic username:password string (optional)
 #' @export
-loadEngine <- function(session, id, engine, url, limit = 1000) {
+loadEngine <- function(session, id, engine, url, limit = 1000, authbasic = NULL) {
   ns <- shiny::NS(id)
   session$sendCustomMessage("ajaxfields", list(
-    ns = ns('ajaxfields'), engine = engine, url = url, limit = limit
+    ns = ns('ajaxfields'), engine = engine, url = url, limit = limit, authbasic = authbasic
   ))
 }

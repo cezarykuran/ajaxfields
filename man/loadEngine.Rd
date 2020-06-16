@@ -4,7 +4,7 @@
 \alias{loadEngine}
 \title{shiny server load modules engine}
 \usage{
-loadEngine(session, id, engine, url, limit = 1000)
+loadEngine(session, id, engine, url, limit = 1000, authbasic = NULL)
 }
 \arguments{
 \item{session}{shiny server session}
@@ -16,6 +16,8 @@ loadEngine(session, id, engine, url, limit = 1000)
 \item{url}{engine url}
 
 \item{limit}{results max size (optional, default 1000)}
+
+\item{authbasic}{username:password string (optional)}
 }
 \description{
 server <- function(input, output, session) {
